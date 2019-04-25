@@ -81,5 +81,12 @@ namespace Bridgeport_Library.Controllers
             var role = await RoleManager.FindByIdAsync(id);
             return View(new RoleViewModel(role));
         }
+
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            var role = await RoleManager.FindByIdAsync(id);
+            await RoleManager.DeleteAsync(role);
+            return RedirectToAction("Index");
+        }
     }
 }
