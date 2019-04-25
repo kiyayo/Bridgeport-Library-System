@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Bridgeport_Library.Models;
 
+
 namespace Bridgeport_Library.Controllers
 {
     [Authorize]
@@ -151,7 +152,7 @@ namespace Bridgeport_Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Address = model.Address, TelephoneNumber = model.TelephoneNumber, DOB = model.DOB, Gender = model.Gender, TRN = model.TRN };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

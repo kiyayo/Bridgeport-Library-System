@@ -10,7 +10,6 @@ namespace Bridgeport_Library.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Bridgeport_Library.Models.ApplicationDbContext";
         }
 
         protected override void Seed(Bridgeport_Library.Models.ApplicationDbContext context)

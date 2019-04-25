@@ -16,7 +16,35 @@
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
-    </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "col-md2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Address, new {@class = "form-control"})
+        </div>
+            <div class = "form-group">
+                @Html.LabelFor(m => m.TelephoneNumber, new {@class = "form-control" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.TelephoneNumber, new {@class = "form-control"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DOB, new {@class = "col-md2 control-label"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.DOB, new {@class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Gender, new { @class = "form-check-input",@id = "materialUnchecked" })
+                 @Html.RadioButtonFor(m => m.Gender , new { @class = "form-check form-check-inline" })
+                </div>
+            </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TRN,new{ @class = "form-control" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.TRN,new{ @class = "form-control" })
+            </div>
+        </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

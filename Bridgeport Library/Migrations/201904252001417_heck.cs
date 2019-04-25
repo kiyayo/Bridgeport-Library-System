@@ -3,7 +3,7 @@ namespace Bridgeport_Library.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class heck : DbMigration
     {
         public override void Up()
         {
@@ -23,11 +23,37 @@ namespace Bridgeport_Library.Migrations
                 .PrimaryKey(t => t.BookId);
             
             CreateTable(
+                "dbo.BorrowHistories",
+                c => new
+                    {
+                        BorrowHistoryId = c.Int(nullable: false, identity: true),
+                        BookId = c.Int(nullable: false),
+                        MemberId = c.Int(nullable: false),
+                        BorrowDate = c.DateTime(nullable: false),
+                        ReturnDate = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.BorrowHistoryId)
+                .ForeignKey("dbo.Books", t => t.BookId, cascadeDelete: true)
+                .ForeignKey("dbo.Members", t => t.MemberId, cascadeDelete: true)
+                .Index(t => t.BookId)
+                .Index(t => t.MemberId);
+            
+            CreateTable(
+                "dbo.Members",
+                c => new
+                    {
+                        MemberId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.MemberId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 256),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
@@ -46,10 +72,24 @@ namespace Bridgeport_Library.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.RoleViewModels",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.AspNetUsers",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        Address = c.String(),
+                        TelephoneNumber = c.String(nullable: false),
+                        DOB = c.DateTime(nullable: false),
+                        Gender = c.String(),
+                        TRN = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -98,17 +138,24 @@ namespace Bridgeport_Library.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.BorrowHistories", "MemberId", "dbo.Members");
+            DropForeignKey("dbo.BorrowHistories", "BookId", "dbo.Books");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.BorrowHistories", new[] { "MemberId" });
+            DropIndex("dbo.BorrowHistories", new[] { "BookId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.RoleViewModels");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Members");
+            DropTable("dbo.BorrowHistories");
             DropTable("dbo.Books");
         }
     }

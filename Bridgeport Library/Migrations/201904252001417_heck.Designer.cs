@@ -7,13 +7,13 @@ namespace Bridgeport_Library.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddedBorrowHistory : IMigrationMetadata
+    public sealed partial class heck : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedBorrowHistory));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(heck));
         
         string IMigrationMetadata.Id
         {
-            get { return "201904212132038_Added Borrow History"; }
+            get { return "201904252001417_heck"; }
         }
         
         string IMigrationMetadata.Source

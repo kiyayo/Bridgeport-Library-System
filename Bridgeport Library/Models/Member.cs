@@ -11,7 +11,7 @@ namespace Bridgeport_Library.Models
         public int MemberId { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
+        
        
     }
 }

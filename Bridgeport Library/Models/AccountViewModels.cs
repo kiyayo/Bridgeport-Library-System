@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bridgeport_Library.Models
@@ -79,6 +80,11 @@ namespace Bridgeport_Library.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string Address { get; internal set; }
+        public string TelephoneNumber { get; internal set; }
+        public DateTime DOB { get; internal set; }
+        public string Gender { get; internal set; }
+        public int TRN { get; internal set; }
     }
 
     public class ResetPasswordViewModel

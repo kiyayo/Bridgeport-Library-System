@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace Bridgeport_Library.Models
 {
@@ -14,9 +15,6 @@ namespace Bridgeport_Library.Models
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string TelephoneNumber { get; set; }
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        public string EmailAddress { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
@@ -32,6 +30,11 @@ namespace Bridgeport_Library.Models
         }
     }
 
+    public class  ApplicationRole:IdentityRole
+    {
+        public ApplicationRole() : base() { }
+        public ApplicationRole(string roleName) : base(roleName) {  }
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -46,5 +49,7 @@ namespace Bridgeport_Library.Models
         public DbSet<Book> Books { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<BorrowHistory>BorrowHistories { get; set; }
+
+        public System.Data.Entity.DbSet<Bridgeport_Library.Models.RoleViewModel> RoleViewModels { get; set; }
     }
 }
