@@ -70,12 +70,16 @@ namespace Bridgeport_Library.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Details(string Id)
+        public async Task<ActionResult> Details(string id)
         {
             var role = await RoleManager.FindByIdAsync(id);
             return View(new RoleViewModel(role));
         }
 
-
+        public async Task<ActionResult> Delete(string id)
+        {
+            var role = await RoleManager.FindByIdAsync(id);
+            return View(new RoleViewModel(role));
+        }
     }
 }
