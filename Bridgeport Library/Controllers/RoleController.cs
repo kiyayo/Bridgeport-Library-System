@@ -9,15 +9,15 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Bridgeport_Library.Controllers
 {
-    public class RoleController : Controller
+    public class RolesController : Controller
     {
         private ApplicationRoleManager _roleManager;
 
-    public RoleController()
+    public RolesController()
     {
     }
 
-    public RoleController(ApplicationRoleManager roleManager)
+    public RolesController(ApplicationRoleManager roleManager)
     {
             RoleManager = roleManager;
 

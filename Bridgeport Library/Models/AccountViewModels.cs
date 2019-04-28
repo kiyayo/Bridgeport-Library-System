@@ -80,11 +80,12 @@ namespace Bridgeport_Library.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        public string Address { get; internal set; }
-        public string TelephoneNumber { get; internal set; }
-        public DateTime DOB { get; internal set; }
-        public string Gender { get; internal set; }
-        public int TRN { get; internal set; }
+        public string Address { get;  set; }
+        public string TelephoneNumber { get;  set; }
+        public DateTime DOB { get;  set; }
+        public string Gender { get;  set; }
+        public int TRN { get; set; }
+        public string RoleName { get; set; }
     }
 
     public class ResetPasswordViewModel
