@@ -10,21 +10,27 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-sm bg-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link"@Html.ActionLink("Home", "Index", "Home")</a>
-                <a class="nav-link"@Html.ActionLink("About", "About", "Home")</a>
-                <a class="nav-link"@Html.ActionLink("Contact", "Contact", "Home")</a>
-                <a class="nav-link"@Html.ActionLink("Books", "Index", "Books")</a>
-                <a class="nav-link"@Html.ActionLink("Members", "Index", "Members")</a>
-                <a class="nav-link" @Html.ActionLink("Roles","Index","Roles")</a>
-                </li>
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @Html.ActionLink("Bridgeport Library", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Books","Index","Books")</li>
                 </ul>
-                </nav>
+
+
                 @Html.Partial("_LoginPartial")
-                
-                
+                </div>
+                </div>
+                </nav>
+
                 <div class="container body-content">
                     @RenderBody()
                     <hr />

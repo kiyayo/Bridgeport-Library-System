@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bridgeport_Library.Models;
-using PagedList;
+
 
 namespace Bridgeport_Library.Controllers
 {
@@ -16,50 +16,20 @@ namespace Bridgeport_Library.Controllers
         private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Books
-        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ViewResult Index( )
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            ViewBag.PublicationDateSortParm = sortOrder == "PublicationDate" ? "PublicationDate_desc" : "PublicationDate";
-
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-
-            var books = from b in db.Books
-                           select b;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                books= books.Where(b => b.Title.Contains(searchString)
-                                       || b.Genre.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "title_desc":
-                    books = books.OrderByDescending(b => b.Title);
-                    break;
-                case "PublicationDate":
-                    books = books.OrderBy(b => b.PublicationDate);
-                    break;
-                case "PublicationDate_desc ":
-                    books = books.OrderByDescending(b => b.PublicationDate);
-                    break;
-                default:
-                    books = books.OrderBy(b => b.Title);
-                    break;
-            }
-
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(books.ToPagedList(pageNumber, pageSize));
+            var books = db.Books.Include(h => h.BorrowHistories)
+                .Select(b => new BookViewModel
+                {
+                    BookId = b.BookId,
+                    Author = b.Author,
+                    Publisher = b.Publisher,
+                    ISBN = b.ISBN,
+                    Title = b.Title,
+                    Rating = b.Rating,
+                    IsAvailable = !b.BorrowHistories.Any(h => h.ReturnDate == null)
+                }).ToList();
+            return View();
         }
 
         // GET: Books/Details/5

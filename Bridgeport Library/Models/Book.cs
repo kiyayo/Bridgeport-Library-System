@@ -23,6 +23,6 @@ namespace Bridgeport_Library.Models
         public string Genre { get; set; }
         [Required]
         public string Rating { get; set; }
-        public ICollection BorrowHistories { get; set; }
+        public ICollection<BorrowHistory> BorrowHistories { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Bridgeport_Library.Models
         public string Author { get; set; }
 
         public string Publisher { get; set; }
+        public string Rating { get; set; }
 
         public bool IsAvailable { get; set; }
 

@@ -50,6 +50,6 @@ namespace Bridgeport_Library.Models
         public DbSet<Member> Members { get; set; }
         public DbSet<BorrowHistory>BorrowHistories { get; set; }
 
-        public System.Data.Entity.DbSet<Bridgeport_Library.Models.RoleViewModel> RoleViewModels { get; set; }
+        
     }
 }
