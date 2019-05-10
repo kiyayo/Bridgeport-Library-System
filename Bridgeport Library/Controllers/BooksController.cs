@@ -3,43 +3,43 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bridgeport_Library.Models;
 
-
 namespace Bridgeport_Library.Controllers
 {
     public class BooksController : Controller
     {
-        private readonly ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Books
-        public ViewResult Index( )
+        public ActionResult Index()
         {
             var books = db.Books.Include(h => h.BorrowHistories)
-                .Select(b => new BookViewModel
-                {
-                    BookId = b.BookId,
-                    Author = b.Author,
-                    Publisher = b.Publisher,
-                    ISBN = b.ISBN,
-                    Title = b.Title,
-                    Rating = b.Rating,
-                    IsAvailable = !b.BorrowHistories.Any(h => h.ReturnDate == null)
-                }).ToList();
-            return View();
+            .Select(b => new BookViewModel
+            {
+                BookId = b.BookId,
+                Author = b.Author,
+                Publisher = b.Publisher,
+                ISBN = b.ISBN,
+                Title = b.Title,
+                IsAvailable = !b.BorrowHistories.Any(h => h.ReturnDate == null)
+            }).ToList();
+
+            return View(books);
         }
 
         // GET: Books/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = await db.Books.FindAsync(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -58,12 +58,12 @@ namespace Bridgeport_Library.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookId,Title,ISBN,Author,Publisher,PublicationDate,Genre,Rating")] Book book)
+        public async Task<ActionResult> Create([Bind(Include = "BookId,Title,ISBN,Author,Publisher,PublicationDate,Genre,Rating")] Book book)
         {
             if (ModelState.IsValid)
             {
                 db.Books.Add(book);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -71,13 +71,13 @@ namespace Bridgeport_Library.Controllers
         }
 
         // GET: Books/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = await db.Books.FindAsync(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -90,25 +90,25 @@ namespace Bridgeport_Library.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookId,Title,ISBN,Author,Publisher,PublicationDate,Genre,Rating")] Book book)
+        public async Task<ActionResult> Edit([Bind(Include = "BookId,Title,ISBN,Author,Publisher,PublicationDate,Genre,Rating")] Book book)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(book);
         }
 
         // GET: Books/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = await db.Books.FindAsync(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -119,11 +119,11 @@ namespace Bridgeport_Library.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Book book = db.Books.Find(id);
+            Book book = await db.Books.FindAsync(id);
             db.Books.Remove(book);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

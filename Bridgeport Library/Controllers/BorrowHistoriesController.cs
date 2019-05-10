@@ -29,7 +29,7 @@ namespace Bridgeport_Library.Controllers
             }
 
             var borrowHistory = new BorrowHistory { BookId = book.BookId, BorrowDate = DateTime.Now };
-            ViewBag.CustomerId = new SelectList(db.Members, "MemberId", "Name");
+            ViewBag.MemberId = new SelectList(db.Members, "MemberId", "Name");
             return View(borrowHistory);
         }
 
@@ -47,7 +47,7 @@ namespace Bridgeport_Library.Controllers
                 return RedirectToAction("Index", "Books");
             }
 
-            ViewBag.CustomerId = new SelectList(db.Members, "MemberId", "Name", borrowHistory.MemberId);
+            ViewBag.MemberId = new SelectList(db.Members, "MemberId", "Name", borrowHistory.MemberId);
             return View(borrowHistory);
         }
 

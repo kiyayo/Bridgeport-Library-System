@@ -3,18 +3,20 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Books</h2>
 
 @Html.ActionLink("Create New", "Create")
 
-<table class="table">
-    <tr>
+<input type="text" id="MyInput" onkeyup="FilterTable()" placeholder="search books">
+
+<table class="table" id="myTable">
+    <tr class="header">
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ISBN)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Author)
         </th>
